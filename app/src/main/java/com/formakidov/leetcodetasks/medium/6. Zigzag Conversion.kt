@@ -71,7 +71,7 @@ class Solution6 {
 
         var curRow = 0
         var iteratingDown = false
-        val rows = MutableList(numRows) { StringBuilder() }
+        val rows = Array(numRows) { StringBuilder() }
 
         for (char in s) {
             rows[curRow].append(char)
@@ -83,7 +83,11 @@ class Solution6 {
             if (iteratingDown) curRow++ else curRow--
         }
 
-        return rows.joinToString("")
+        val result = StringBuilder()
+        for (row in rows) {
+            result.append(row)
+        }
+        return result.toString()
     }
 }
 
