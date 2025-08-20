@@ -33,26 +33,20 @@ Constraints:
 class SqrtSolution {
 
     fun mySqrt(x: Int): Int {
-        if (x == 0) return 0
+        if (x < 2) return x
         var left = 1
-        var right = x.coerceAtMost(46340) // 46340 is Max possible root for int
-        var result = 0
+        var right = x
 
         while (left <= right) {
             val mid = left + (right - left) / 2
-            val square = mid * mid
 
-            if (square == x) {
-                return mid
-            } else if (square < x) {
-                result = mid
-                left = mid + 1
-            } else {
+            if (mid > x / mid) { // avoids int overflow
                 right = mid - 1
+            } else {
+                left = mid + 1
             }
         }
-
-        return result
+        return right
     }
 }
 
