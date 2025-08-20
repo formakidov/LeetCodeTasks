@@ -39,11 +39,11 @@ The list is guaranteed to be sorted in ascending order.
  * }
  */
 class Solution83 {
-    fun deleteDuplicates(head: ListNode86?): ListNode86? {
+    fun deleteDuplicates(head: ListNode83?): ListNode83? {
         var current = head
-        while(current?.next != null) {
-            if (current.`val` == current.next!!.`val`) {
-                current.next = current.next!!.next
+        while (current?.next != null) {
+            if (current.`val` == current.next?.`val`) {
+                current.next = current.next?.next
             } else {
                 current = current.next
             }
@@ -52,22 +52,22 @@ class Solution83 {
     }
 }
 
-class ListNode86(var `val`: Int) {
-    var next: ListNode86? = null
+class ListNode83(var `val`: Int) {
+    var next: ListNode83? = null
 }
 
-private fun createListNode(values: IntArray): ListNode86? {
+private fun createListNode(values: IntArray): ListNode83? {
     if (values.isEmpty()) return null
-    val head = ListNode86(values[0])
+    val head = ListNode83(values[0])
     var current = head
     for (i in 1 until values.size) {
-        current.next = ListNode86(values[i])
+        current.next = ListNode83(values[i])
         current = current.next!!
     }
     return head
 }
 
-private fun listNodeToString(head: ListNode86?): String {
+private fun listNodeToString(head: ListNode83?): String {
     if (head == null) return "[]"
     val sb = StringBuilder("[")
     var current = head
@@ -82,7 +82,7 @@ private fun listNodeToString(head: ListNode86?): String {
     return sb.toString()
 }
 
-private fun listsAreEqual(l1: ListNode86?, l2: ListNode86?): Boolean {
+private fun listsAreEqual(l1: ListNode83?, l2: ListNode83?): Boolean {
     var c1 = l1
     var c2 = l2
     while (c1 != null && c2 != null) {
