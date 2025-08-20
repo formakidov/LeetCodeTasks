@@ -42,21 +42,15 @@ class Solution7 {
             x
         }
 
-        val digitsArray = IntArray(10) { -1 }
-        var index = 0
-        while (temp > 0) {
-            digitsArray[index++] = temp % 10
-            temp /= 10
-        }
-
         var result = 0
-        for (digit in digitsArray) {
-            if (digit == -1) break
+        while (temp > 0) {
+            val digit = temp % 10
             val tempResult = result * 10 + digit
             if (result != (tempResult - digit) / 10) {
                 return 0
             }
             result = tempResult
+            temp /= 10
         }
 
         return if (negative) -result else result
