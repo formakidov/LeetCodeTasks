@@ -1,0 +1,6 @@
+Create new file similar to the one from context.
+Prepare test cases: create separate test function that takes value and expected result and prints if failed (colorized).
+DO NOT implement solution itself, leave the implementation function for me. DO NOT give me hints.
+DO NOT add new comments to any function except for the task description at the very top.
+Printed text should clearly state what was inputted, what expected, what was the result.
+Based on this info:
