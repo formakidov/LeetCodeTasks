@@ -97,19 +97,13 @@ class Solution8 {
     fun myAtoi(s: String): Int {
         var sign = 1
         var counting = false
-        var number = 0L
-        val charToDigit = mapOf(
-            '0' to 0, '1' to 1, '2' to 2, '3' to 3, '4' to 4, '5' to 5, '6' to 6, '7' to 7, '8' to 8, '9' to 9
-        )
+        var number = 0
 
-        for (i in s.indices) {
-            val c = s[i]
+        s.forEach { c ->
             if (c == ' ') {
                 if (counting) {
                     // finish counting, not a number
-                    break
-                } else {
-                    // skip leading spaces
+                    return sign * number
                 }
             } else if (c == '-' && !counting) {
                 sign = -1
@@ -117,26 +111,20 @@ class Solution8 {
             } else if (c == '+' && !counting) {
                 sign = 1
                 counting = true
-            } else if (charToDigit.containsKey(c)) {
+            } else if (c in '0'..'9') {
                 counting = true
-                number = number * 10 + charToDigit[c]!!
-            } else {
-                if (counting) {
-                    // finish counting, not a number
-                    break
+                val digit = c - '0'
+                if (214748364 /* i.e. int_max_value / 10 */ < number || (214748364 == number && 7 /* i.e. int_max_value % 10 */ < digit)) {
+                    return if (sign == 1) Integer.MAX_VALUE else Integer.MIN_VALUE
                 } else {
-                    return 0
+                    number = number * 10 + digit
                 }
-            }
-
-            if (sign == 1 && number > Integer.MAX_VALUE) {
-                return Integer.MAX_VALUE
-            } else if (sign == -1 && number > Integer.MAX_VALUE) {
-                return Integer.MIN_VALUE
+            } else {
+                return if (counting) sign * number else 0
             }
         }
 
-        return sign * (number.toInt())
+        return sign * number
     }
 }
 
@@ -152,9 +140,13 @@ fun main() {
     testMyAtoi("words and 987", 0)
     testMyAtoi("", 0)
     testMyAtoi("+1", 1)
-    testMyAtoi("2147483647", 2147483647)
-    testMyAtoi("-2147483648", -2147483648)
+    testMyAtoi("2147483649", 2147483647)
     testMyAtoi("2147483648", 2147483647)
+    testMyAtoi("2147483647", 2147483647)
+    testMyAtoi("2147483646", 2147483646)
+    testMyAtoi("-2147483646", -2147483646)
+    testMyAtoi("-2147483647", -2147483647)
+    testMyAtoi("-2147483648", -2147483648)
     testMyAtoi("-2147483649", -2147483648)
     testMyAtoi("  -0012a42", -12)
     testMyAtoi("   +0 123", 0)
