@@ -42,26 +42,25 @@ class ListNode(var `val`: Int) {
 class Solution61 {
     fun rotateRight(head: ListNode?, k: Int): ListNode? {
         // edge cases
-        if (head == null) return null
-        if (head.next == null || k == 0) return head
+        if (head == null || k == 0) return head
 
         // count size
-        var size = 2
-        var tail = head.next!!
-        while(tail.next != null) {
-            tail = tail.next!!
+        var size = 1
+        var tail = head
+        while (tail?.next != null) {
+            tail = tail.next
             size++
         }
 
-        val effectiveK = if (k >= size) k % size else k
+        val effectiveK = k % size
         if (effectiveK == 0) {
             return head // effectively no rotation
-        } else {
-            tail.next = head
         }
 
+        tail?.next = head
+
         var newTail = head
-        (0 until size - effectiveK - 1).forEach { i ->
+        for (i in 0 until size - effectiveK - 1) {
             newTail = newTail?.next
         }
 
