@@ -60,18 +60,16 @@ class Solution61 {
             tail.next = head
         }
 
-        val newHeadPosition = size - effectiveK
-
-        var separationNode = head
-        (0 until newHeadPosition).forEach { i ->
-            val nextNode = separationNode!!.next
-            if (i == newHeadPosition - 1) {
-                separationNode.next = null
-            }
-            separationNode = nextNode
+        var newTail = head
+        (0 until size - effectiveK - 1).forEach { i ->
+            newTail = newTail?.next
         }
 
-        return separationNode
+        val newHead = newTail?.next
+
+        newTail?.next = null
+
+        return newHead
     }
 }
 
