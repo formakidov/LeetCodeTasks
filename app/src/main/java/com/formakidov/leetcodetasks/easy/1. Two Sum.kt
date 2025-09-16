@@ -42,25 +42,14 @@ Follow-up: Can you come up with an algorithm that is less than O(n2) time comple
 */
 class Solution1 {
     fun twoSum(nums: IntArray, target: Int): IntArray {
-        val sortedNumIndexPairs = nums.mapIndexed { index, value -> value to index }.sortedBy { it.first }
+        val map = HashMap<Int, Int>(nums.size)
 
-        var i = 0
-        var j = sortedNumIndexPairs.size - 1
-
-        while (i < j) {
-            val iValueToIndexPair = sortedNumIndexPairs[i]
-            val jValueToIndexPair = sortedNumIndexPairs[j]
-            val sum = iValueToIndexPair.first + jValueToIndexPair.first
-
-            when {
-                sum > target -> {
-                    j--
-                }
-                sum < target -> {
-                    i++
-                }
-                else -> return intArrayOf(iValueToIndexPair.second, jValueToIndexPair.second).sortedArray()
+        nums.forEachIndexed { index, value ->
+            val remaining = target - value
+            if (map.containsKey(remaining)) {
+                return intArrayOf(map[remaining]!!, index)
             }
+            map[value] = index
         }
 
         return intArrayOf() // never reaches per task specs (there is always a solution)
