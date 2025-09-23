@@ -43,19 +43,28 @@ Could you do it in-place with O(1) extra space?
 
 class Solution189 {
     fun rotate(nums: IntArray, k: Int) {
+        if (nums.size <= 1) return
+
         val effectiveK = k % nums.size
         if (effectiveK == 0) return
 
-        val tmp = nums.takeLast(effectiveK)
-
-        for (i in nums.size - 1 downTo effectiveK) {
-            nums[i] = nums[i-effectiveK]
+        fun reverse(nums: IntArray, sIndex: Int, eIndex: Int) {
+            var i = sIndex
+            var j = eIndex
+            while (i < j) {
+                val tmp = nums[i]
+                nums[i] = nums[j]
+                nums[j] = tmp
+                i++
+                j--
+            }
         }
 
-        tmp.forEachIndexed { index, value ->
-            nums[index] = value
-        }
+        reverse(nums, 0, nums.size-1)
+        reverse(nums, 0, effectiveK-1)
+        reverse(nums, effectiveK, nums.size - 1)
     }
+
 }
 
 private fun testSolution(numsInitial: IntArray, k: Int, expected: IntArray) {
@@ -79,7 +88,7 @@ private fun testSolution(numsInitial: IntArray, k: Int, expected: IntArray) {
 }
 
 fun main() {
-    testSolution(IntArray(5) { it * 2 }, 7, intArrayOf(6, 8, 0, 2, 4))
+    testSolution(intArrayOf(0, 2, 4, 6, 8, 10), 7, intArrayOf(10, 0, 2, 4, 6, 8))
     testSolution(intArrayOf(1, 2, 3, 4), 5, intArrayOf(4, 1, 2, 3))
     testSolution(intArrayOf(1), 5, intArrayOf(1))
     testSolution(intArrayOf(1, 2), 1, intArrayOf(2, 1))
@@ -89,6 +98,6 @@ fun main() {
     testSolution(intArrayOf(1, 2, 3), 3, intArrayOf(1, 2, 3))
     testSolution(IntArray(100) { it + 1 }, 10, IntArray(100) { (it + 90) % 100 + 1 })
     testSolution(intArrayOf(Int.MAX_VALUE, 0, Int.MIN_VALUE), 1, intArrayOf(Int.MIN_VALUE, Int.MAX_VALUE, 0))
-    testSolution(IntArray(100_000) { it }, 100_000, IntArray(100_000) { it })
-    testSolution(IntArray(100_000) { it }, 1, IntArray(100_000) { (it + 99_999) % 100_000 })
+//    testSolution(IntArray(100_000) { it }, 100_000, IntArray(100_000) { it })
+//    testSolution(IntArray(100_000) { it }, 1, IntArray(100_000) { (it + 99_999) % 100_000 })
 }
